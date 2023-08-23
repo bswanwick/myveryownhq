@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import theBackend from './theBackend';
-import { ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from './theme';
 
 console.debug('[myveryownhq] Connected to backend.', { theBackend });
@@ -16,6 +16,7 @@ console.debug('[myveryownhq] React render()...');
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <App />
     </ThemeProvider>
   </React.StrictMode>

@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { Button } from '@mui/material';
+import HQButton from './HQButton';
 
 function App() {
   return (
@@ -9,10 +9,8 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
+          <HQButton />
         </p>
-        <Button variant="contained" onClick={() => window.open('https://reactjs.org')}>
-          Hello world
-        </Button>
       </header>
     </div>
   );
