@@ -1,8 +1,41 @@
 import './App.css';
 
-import React, { useState } from 'react';
+import firebase, { initializeApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged, signInAnonymously, User } from 'firebase/auth';
+import { collection, getFirestore } from 'firebase/firestore';
+import { useState } from 'react';
 
 import logo from './logo.svg';
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyDRZuDB6eIDLYpvEKYMfPza9__D76n_ToI',
+  authDomain: 'myveryownhq.firebaseapp.com',
+  databaseURL: 'https://myveryownhq-default-rtdb.firebaseio.com',
+  projectId: 'myveryownhq',
+  storageBucket: 'myveryownhq.appspot.com',
+  messagingSenderId: '1073445984840',
+  appId: '1:1073445984840:web:4e3f88374066e4f8ce567d',
+  measurementId: 'G-RJP4DLFKGD',
+};
+
+// Initialize Firebase
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth();
+const db = getFirestore();
+
+onAuthStateChanged(auth, (user) => {
+  console.log('[myveryownhq] onAuthStateChanged: ', { user });
+  if (user != null) {
+    syncData(user);
+  }
+});
+
+function syncData(user: User) {
+  const messagesRef = collection(db, `messages/${user.uid}`);
+  console.log('[myveryownhq] syncData: ', { messagesRef });
+}
 
 function App() {
   const [count, setCount] = useState(0);
@@ -18,14 +51,11 @@ function App() {
 
         <div className="body">
           <button onClick={() => setCount((count) => count + 1)}>
-            🪂 Click me : {count}
+            🪂 Press to increment: {count}
           </button>
 
-          <p> Don&apos;t forgot to install Eslint and Prettier in Your Vscode.</p>
-
-          <p>
-            Mess up the code in <code>App.tsx </code> and save the file.
-          </p>
+          <button onClick={() => signInAnonymously(auth)}>🪂 Login Anonymously</button>
+          <code>{JSON.stringify({ auth, db })}</code>
           <p>
             <a
               className="App-link"
